@@ -33,10 +33,11 @@ app.route('/_api/package.json')
     });
   });
   
-app.route('/')
+app.route('/:id')
     .get(function(req, res) {
-      
-		  res.sendFile(process.cwd() + '/views/index.html');
+      //res.writeHead(200, { "Content-Type": "json" });
+      let param = req.params.id;
+		  res.send(param);
     })
 
 // Respond not found to all the wrong routes
