@@ -8,6 +8,7 @@
 var fs = require('fs');
 var express = require('express');
 var app = express();
+let flag = false;
 
 if (!process.env.DISABLE_XORIGIN) {
   app.use(function(req, res, next) {
@@ -37,7 +38,11 @@ app.route('/:id')
     .get(function(req, res) {
       //res.writeHead(200, { "Content-Type": "json" });
       let param = req.params.id;
-		  res.send(param);
+      let jsonBody = {unix: param}
+      let valid = (new Date(param)).getTime() > 0
+      if(valid){ flag = true; }
+	    	  
+  res.send(param);
     })
 
 // Respond not found to all the wrong routes
