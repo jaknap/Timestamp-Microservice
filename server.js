@@ -47,30 +47,20 @@ app.route('/:ts')
       let valid = (new Date(paramStr)).getTime() > 0
       console.log(valid);
   
- //if(valid){
-      //Unix
-      if(strMatch.length != 1){
+      if(strMatch == null){
         let dc = dateCheck();
-        let validateNUnix = (new Date(paramStr)).getTime() > 0;
-        
-      }
-      
-      function dateCheck(){
-        let date = new Date(param*1000);
-        let year = date.getFullYear();
-        let month = months[date.getMonth()];
-        let day = date.getDate();
-      
-      //December 15, 2015
-        let dateStr = month+' '+day+', '+year;
-        //let jsonBody = {unix: paramStr, natural: dateStr};
-        return dateStr;
-      //res.send(JSON.stringify(jsonBody));
-      }
+        let validateNUnix = (new Date(dc)).getTime() > 0;
+        if(validateNUnix){
+          let jsonBody = {unix: parseInt(param), natural: dc};
+          res.send(jsonBody);
+        }
       }
       //Natural
       else{
         //new Date('2012.08.10').getTime() / 1000
+        let valid = (new Date(paramStr)).getTime() > 0
+        console.log(valid);
+        
         let modParam = paramStr.split(' ');
         //"December", "15,", "2015"]
         let i=0;
@@ -89,7 +79,15 @@ app.route('/:ts')
         res.send(jsonBody);
       }
       
-  
+      function dateCheck(){
+        let date = new Date(param*1000);
+        let year = date.getFullYear();
+        let month = months[date.getMonth()];
+        let day = date.getDate();
+        let dateStr = month+' '+day+', '+year;
+        return dateStr;
+      }
+        
         let jsonBody = {unix: null, natural: null};
         res.send(jsonBody);
       
