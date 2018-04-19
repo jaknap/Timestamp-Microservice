@@ -67,18 +67,19 @@ app.route('/:ts')
       else{
         console.log("Non Unix");
         //new Date('2012.08.10').getTime() / 1000
-        let modParam = paramStr.split('%20');
+        let modParam = paramStr.split(' ');
         //"December", "15,", "2015"]
         let i=0;
         let newMonth = undefined;
         months.forEach((element)=>{
           
           if(element == modParam[0]){
-            newMonth = i;
+            newMonth = i+1;
           }
           i++;
         })
-        let newDateStr = modParam[2]+'.'+newMonth+'.'+modParam[0].slice(0,-1);
+        let newDateStr = modParam[2]+'.'+newMonth+'.'+modParam[1].slice(0,-1);
+        console.log(newDateStr);
         let unixTime = new Date(newDateStr).getTime() / 1000;
         let jsonBody = {unix: unixTime.toString(), natural: paramStr};
         res.send(jsonBody);
