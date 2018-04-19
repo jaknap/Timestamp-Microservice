@@ -39,7 +39,11 @@ app.route('/:ts')
       //res.writeHead(200, { "Content-Type": "json" });
       let param = req.params.ts;
       let paramStr = param.toString();
+      let regex = '%20';
+      let strMatch = paramStr.match(regex);
       
+      //Natural
+      if(strMatch.length < 1){
       let theString = paramStr.replace(/%20/g, "");
       let valid = (new Date(paramStr)).getTime() > 0
       
@@ -54,7 +58,11 @@ app.route('/:ts')
       let jsonBody = {unix: paramStr, natural: dateStr};
       
       res.send(jsonBody);
-      
+      }
+      //Unix
+      else{
+        //new Date('2012.08.10').getTime() / 1000
+      }
       
 	    	  
   
