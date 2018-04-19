@@ -63,6 +63,7 @@ app.route('/:ts')
       else{
         //new Date('2012.08.10').getTime() / 1000
         let modParam = paramStr.split('%20');
+        let naturalStr = modParam.join(" ");
         //"December", "15,", "2015"]
         let i=0;
         let newMonth = undefined;
@@ -73,6 +74,12 @@ app.route('/:ts')
           }
           i++;
         })
+        let newDateStr = modParam[2]+'.'+newMonth+'.'+modParam[0].slice(0,-1);
+        let unixTime = new Date(newDateStr).getTime() / 1000;
+        let jsonBody = {unix: unixTime.toString(), natural: naturalStr};
+        res.send(jsonBody);
+        
+        
       }
       
 	    	  
