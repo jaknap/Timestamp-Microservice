@@ -41,16 +41,17 @@ app.route('/:ts')
       let paramStr = param.toString();
       let regex = ' ';
       let strMatch = paramStr.match(regex);
-      console.log(strMatch);
       
       let months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
       
+      let valid = (new Date(paramStr)).getTime() > 0
+      console.log(valid);
+  
+ if(valid){
       //Natural
       if(strMatch.length != 1){
-      console.log("Unix");
         
       let theString = paramStr.replace(/%20/g, "");
-      let valid = (new Date(paramStr)).getTime() > 0
       
       let date = new Date(param*1000);
       let year = date.getFullYear();
@@ -61,11 +62,10 @@ app.route('/:ts')
       let dateStr = month+' '+day+', '+year;
       let jsonBody = {unix: paramStr, natural: dateStr};
       
-      res.send(jsonBody);
+      res.send(JSON.stringify(jsonBody));
       }
       //Unix
       else{
-        console.log("Non Unix");
         //new Date('2012.08.10').getTime() / 1000
         let modParam = paramStr.split(' ');
         //"December", "15,", "2015"]
@@ -83,9 +83,13 @@ app.route('/:ts')
         let unixTime = new Date(newDateStr).getTime() / 1000;
         let jsonBody = {unix: unixTime.toString(), natural: paramStr};
         res.send(jsonBody);
-        
-        
       }
+      }
+  else{
+        let jsonBody = {unix: null, natural: null};
+        res.send(jsonBody);
+      
+  }
       
 	    	  
   
