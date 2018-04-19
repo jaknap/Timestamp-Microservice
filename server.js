@@ -39,8 +39,10 @@ app.route('/:ts')
       //res.writeHead(200, { "Content-Type": "json" });
       let param = req.params.ts;
       let paramStr = param.toString();
+      
+      let theString = paramStr.replace(/%20/g, "");
       let valid = (new Date(paramStr)).getTime() > 0
-      if(valid){ 
+      
       let date = new Date(param*1000);
       let months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
       let year = date.getFullYear();
@@ -52,7 +54,7 @@ app.route('/:ts')
       let jsonBody = {unix: paramStr, natural: dateStr};
       
       res.send(jsonBody);
-      }
+      
       
 	    	  
   
