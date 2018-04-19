@@ -34,15 +34,27 @@ app.route('/_api/package.json')
     });
   });
   
-app.route('/:id')
+app.route('/:ts')
     .get(function(req, res) {
       //res.writeHead(200, { "Content-Type": "json" });
-      let param = req.params.id;
-      let jsonBody = {unix: param}
+      let param = req.params.ts;
       let valid = (new Date(param)).getTime() > 0
-      if(valid){ flag = true; }
+      if(valid){ 
+      let date = new Date(param*1000);
+      let months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      let year = date.getFullYear();
+      let month = months[date.getMonth()];
+      let day = date.getDate();
+      
+      //December 15, 2015
+      let dateStr = month+' '+day+', '+year;
+      let jsonBody = {unix: param, natural: dateStr};
+      res.send(JSON.stringify(jsonBody));
+      }
+  
+      
 	    	  
-  res.send(param);
+  
     })
 
 // Respond not found to all the wrong routes
