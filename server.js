@@ -34,6 +34,11 @@ app.route('/_api/package.json')
     });
   });
   
+app.route('/')
+    .get(function(req, res) {
+		  res.sendFile(process.cwd() + '/views/index.html');
+    })
+
 app.route('/:ts')
     .get(function(req, res) {
       //res.writeHead(200, { "Content-Type": "json" });
@@ -60,7 +65,7 @@ app.route('/:ts')
         //new Date('2012.08.10').getTime() / 1000
         let valid = (new Date(paramStr)).getTime() > 0
         console.log(valid);
-        
+        if(valid){
         let modParam = paramStr.split(' ');
         //"December", "15,", "2015"]
         let i=0;
@@ -75,8 +80,9 @@ app.route('/:ts')
         let newDateStr = modParam[2]+'.'+newMonth+'.'+modParam[1].slice(0,-1);
         console.log(newDateStr);
         let unixTime = new Date(newDateStr).getTime() / 1000;
-        let jsonBody = {unix: unixTime.toString(), natural: paramStr};
+        let jsonBody = {unix: unixTime, natural: paramStr};
         res.send(jsonBody);
+      }
       }
       
       function dateCheck(){
