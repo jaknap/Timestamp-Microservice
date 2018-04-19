@@ -41,7 +41,6 @@ app.route('/')
 
 app.route('/:ts')
     .get(function(req, res) {
-      //res.writeHead(200, { "Content-Type": "json" });
       let param = req.params.ts;
       let paramStr = param.toString();
       let regex = ' ';
@@ -51,7 +50,8 @@ app.route('/:ts')
       
       let valid = (new Date(paramStr)).getTime() > 0
       console.log(valid);
-  
+      
+      //Unix
       if(strMatch == null){
         let dc = dateCheck();
         let validateNUnix = (new Date(dc)).getTime() > 0;
@@ -62,12 +62,11 @@ app.route('/:ts')
       }
       //Natural
       else{
-        //new Date('2012.08.10').getTime() / 1000
         let valid = (new Date(paramStr)).getTime() > 0
         console.log(valid);
         if(valid){
         let modParam = paramStr.split(' ');
-        //"December", "15,", "2015"]
+        
         let i=0;
         let newMonth = undefined;
         months.forEach((element)=>{
