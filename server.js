@@ -41,6 +41,7 @@ app.route('/:ts')
       let paramStr = param.toString();
       let regex = '%20';
       let strMatch = paramStr.match(regex);
+      let months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
       
       //Natural
       if(strMatch.length < 1){
@@ -48,7 +49,6 @@ app.route('/:ts')
       let valid = (new Date(paramStr)).getTime() > 0
       
       let date = new Date(param*1000);
-      let months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
       let year = date.getFullYear();
       let month = months[date.getMonth()];
       let day = date.getDate();
@@ -62,6 +62,17 @@ app.route('/:ts')
       //Unix
       else{
         //new Date('2012.08.10').getTime() / 1000
+        let modParam = paramStr.split('%20');
+        //"December", "15,", "2015"]
+        let i=0;
+        let newMonth = undefined;
+        months.forEach((element)=>{
+          
+          if(element == modParam[0]){
+            newMonth = i;
+          }
+          i++;
+        })
       }
       
 	    	  
